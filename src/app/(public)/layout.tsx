@@ -8,7 +8,7 @@ export default function PublicLayout({
   return (
     <div>
       <Header />
-      {children}
+      <div className="py-28">{children}</div>
     </div>
   );
 }
