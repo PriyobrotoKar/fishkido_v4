@@ -19,7 +19,7 @@ interface ProjectCardProps {
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
-    <article className="bg-foreground/10 space-y-9 rounded-lg p-4 text-sm">
+    <article className="bg-foreground/5 space-y-9 rounded-lg p-4 text-sm">
       <div className="flex items-center gap-4">
         <div>
           <Image
@@ -27,6 +27,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             alt={project.name}
             width={46}
             height={46}
+            className="rounded-lg"
           />
         </div>
         <div>

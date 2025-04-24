@@ -38,7 +38,7 @@ const socialLinks: SocialLink[] = [
 const Socials = () => {
   return (
     <div>
-      <ul className="bg-foreground/10 mx-auto flex w-fit items-center gap-12 rounded-lg px-7 py-4">
+      <ul className="bg-foreground/5 mx-auto flex w-fit items-center gap-12 rounded-lg px-7 py-4">
         {socialLinks.map((link, index) => (
           <li key={index}>
             <a

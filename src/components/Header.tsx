@@ -1,7 +1,11 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { Button } from './ui/button';
+import { motion } from 'motion/react';
+import { usePathname } from 'next/navigation';
 
 interface NavLink {
   name: string;
@@ -28,6 +32,8 @@ const navLinks: NavLink[] = [
 ];
 
 const Header = () => {
+  const path = usePathname();
+
   return (
     <header className="flex items-center justify-between border-b px-12 py-4">
       <div className="w-20">
@@ -36,11 +42,21 @@ const Header = () => {
 
       <nav>
         <ul className="flex gap-10">
-          {navLinks.map((link) => (
-            <li key={link.name}>
-              <Link href={link.href}>{link.name}</Link>
-            </li>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = path === link.href;
+
+            return (
+              <li key={link.name} className="relative">
+                <Link href={link.href}>{link.name}</Link>
+                {isActive && (
+                  <motion.div
+                    layoutId="active"
+                    className="bg-primary absolute left-1/2 h-1 w-2 -translate-x-1/2 translate-y-0.5 rounded-full"
+                  />
+                )}
+              </li>
+            );
+          })}
         </ul>
       </nav>
 
