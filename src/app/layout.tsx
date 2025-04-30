@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${clashDisplay.variable} ${outfit.variable} antialiased`}
+        className={`${clashDisplay.variable} ${outfit.variable} min-h-svh antialiased`}
       >
         {children}
       </body>
