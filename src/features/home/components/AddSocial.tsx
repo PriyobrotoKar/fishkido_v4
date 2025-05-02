@@ -8,6 +8,7 @@ import {
   DialogTrigger,
   DialogHeader,
   DialogFooter,
+  DialogDescription,
 } from '@/components/ui/dialog';
 import {
   Form,
@@ -18,7 +19,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { DialogDescription } from '@radix-ui/react-dialog';
 import { IconPlus } from '@tabler/icons-react';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -26,6 +26,7 @@ import { z } from 'zod';
 import { CreateSocialSchema } from '../schemas/social';
 import { createSocial } from '../actions/createSocial';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 const AddSocial = () => {
   const router = useRouter();
@@ -44,9 +45,8 @@ const AddSocial = () => {
 
     const response = await createSocial(data);
 
-    if (response.data) {
-    } else {
-      console.error('Error creating social:', response.error);
+    if (!response.data) {
+      toast.error('Error creating social');
     }
 
     setIsOpen(false);

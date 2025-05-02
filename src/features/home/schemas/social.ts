@@ -6,3 +6,6 @@ export const CreateSocialSchema = z.object({
 });
 
 export type CreateSocialDto = z.infer<typeof CreateSocialSchema>;
+
+export const UpdateSocialSchema = CreateSocialSchema.partial();
+export type UpdateSocialDto = z.infer<typeof UpdateSocialSchema>;

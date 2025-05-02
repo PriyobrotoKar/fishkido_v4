@@ -1,6 +1,8 @@
 import { AdminHeader } from '@/components/AdminHeader';
+import { Button } from '@/components/ui/button';
 import { getSocials } from '@/features/home/actions/getSocials';
 import AddSocial from '@/features/home/components/AddSocial';
+import EditSocial from '@/features/home/components/EditSocial';
 import React from 'react';
 
 export default async function AdminHomePage() {
@@ -18,14 +20,19 @@ export default async function AdminHomePage() {
   }
 
   return (
-    <div className="space-y-10 text-center">
+    <div className="space-y-10">
       <AdminHeader subtitle="Home / Socials" />
-      <div>
-        <AddSocial />
+      <div className="flex gap-4 px-4">
+        <div className="basis-1/6">Social</div>
+        <div className="flex-1">Link</div>
+        <div className="flex gap-4">
+          <Button variant={'secondary'}>About Me</Button>
+          <AddSocial />
+        </div>
       </div>
-      <div>
+      <div className="space-y-4">
         {socials.data?.map((social) => {
-          return <div key={social.id}>{social.name}</div>;
+          return <EditSocial social={social} key={social.id} />;
         })}
       </div>
     </div>

@@ -7,7 +7,7 @@ interface AdminHeaderProps {
 
 export const AdminHeader = ({ subtitle }: AdminHeaderProps) => {
   return (
-    <div className="space-y-10">
+    <div className="space-y-10 text-center">
       <div className="space-y-4">
         <h1 className="font-clash text-5xl font-semibold">
           Welcome, AdminUser

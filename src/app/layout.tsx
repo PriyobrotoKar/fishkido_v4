@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { clashDisplay, outfit } from '@/fonts/fonts';
+import { Toaster } from '@/components/ui/sonner';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,6 +18,7 @@ export default function RootLayout({
       <body
         className={`${clashDisplay.variable} ${outfit.variable} min-h-svh antialiased`}
       >
+        <Toaster richColors />
         {children}
       </body>
     </html>

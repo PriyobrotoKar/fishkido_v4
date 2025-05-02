@@ -1,5 +1,6 @@
 import BgGradient from '@/components/BgGradient';
 import Header from '@/components/Header';
+import { Suspense } from 'react';
 
 export default function PublicLayout({
   children,
@@ -10,7 +11,9 @@ export default function PublicLayout({
     <div className="relative min-h-svh">
       <Header />
       <BgGradient />
-      <div className="py-28">{children}</div>
+      <div className="py-28">
+        <Suspense>{children}</Suspense>
+      </div>
     </div>
   );
 }
