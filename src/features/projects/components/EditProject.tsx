@@ -1,12 +1,6 @@
 'use client';
-import React, { useState } from 'react';
-import { Social } from '../../../../prisma/generated/client';
-import { IconPencil, IconX } from '@tabler/icons-react';
+
 import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Dialog,
   DialogTitle,
@@ -24,30 +18,39 @@ import {
   FormLabel,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { UpdateSocialSchema } from '../schemas/social';
-import { updateSocial } from '../actions/updateSocial';
-import { deleteSocial } from '../actions/deleteSocial';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { IconPencil, IconX } from '@tabler/icons-react';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { UpdateProjectSchema } from '@/features/home/schemas/project';
+import { Project } from '../../../../prisma/generated/client';
+import { updateProject } from '../actions/updateProject';
+import { deleteProject } from '../actions/deleteProject';
 
-const EditSocial = ({ social }: { social: Social }) => {
+const EditProject = ({ project }: { project: Project }) => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const form = useForm<z.infer<typeof UpdateSocialSchema>>({
-    resolver: zodResolver(UpdateSocialSchema),
+  const form = useForm<z.infer<typeof UpdateProjectSchema>>({
+    resolver: zodResolver(UpdateProjectSchema),
     defaultValues: {
-      social: social.name,
-      link: social.link,
+      name: project.name,
+      status: project.status,
+      position: project.position,
+      invite: project.invite,
     },
   });
 
   const handleSubmit = form.handleSubmit(async (data) => {
     setIsSubmitting(true);
 
-    const response = await updateSocial(data, social.id);
+    const response = await updateProject(project.id, data);
+
     if (!response.data) {
-      console.error('Error updating social:', response.error);
-      return;
+      toast.error('Error updating project');
     }
 
     setIsOpen(false);
@@ -59,9 +62,9 @@ const EditSocial = ({ social }: { social: Social }) => {
   });
 
   const handleDelete = async () => {
-    const response = await deleteSocial(social.id);
+    const response = await deleteProject(project.id);
     if (!response.data) {
-      toast.error('Error deleting social');
+      toast.error('Error deleting project');
     }
 
     router.refresh();
@@ -69,8 +72,9 @@ const EditSocial = ({ social }: { social: Social }) => {
 
   return (
     <div className="bg-foreground/5 flex gap-4 rounded-lg p-4">
-      <div className="basis-1/6">{social.name}</div>
-      <div className="flex-1">{social.link}</div>
+      <div className="basis-1/6">{project.name}</div>
+      <div className="basis-1/6">{project.position}</div>
+      <div className="flex-1">{project.invite}</div>
       <div className="space-x-4">
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
@@ -80,20 +84,20 @@ const EditSocial = ({ social }: { social: Social }) => {
           </DialogTrigger>
           <DialogContent className="gap-8">
             <DialogHeader>
-              <DialogTitle>Edit Social</DialogTitle>
-              <DialogDescription>Edit social media link.</DialogDescription>
+              <DialogTitle>Edit Project</DialogTitle>
+              <DialogDescription>Edit your project.</DialogDescription>
             </DialogHeader>
             <div>
               <Form {...form}>
                 <form className="space-y-4">
                   <FormField
-                    name="social"
+                    name="name"
                     render={({ field }) => {
                       return (
                         <FormItem>
-                          <FormLabel>Social Media</FormLabel>
+                          <FormLabel>Project Name</FormLabel>
                           <FormControl>
-                            <Input placeholder="Twitch" {...field} />
+                            <Input placeholder="Project" {...field} />
                           </FormControl>
                         </FormItem>
                       );
@@ -101,14 +105,42 @@ const EditSocial = ({ social }: { social: Social }) => {
                   />
 
                   <FormField
-                    name="link"
+                    name="position"
                     render={({ field }) => {
                       return (
                         <FormItem>
-                          <FormLabel>Social Link</FormLabel>
+                          <FormLabel>Position</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Manager" {...field} />
+                          </FormControl>
+                        </FormItem>
+                      );
+                    }}
+                  />
+
+                  <FormField
+                    name="status"
+                    render={({ field }) => {
+                      return (
+                        <FormItem>
+                          <FormLabel>Current Status</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Current" {...field} />
+                          </FormControl>
+                        </FormItem>
+                      );
+                    }}
+                  />
+
+                  <FormField
+                    name="invite"
+                    render={({ field }) => {
+                      return (
+                        <FormItem>
+                          <FormLabel>Invite Link</FormLabel>
                           <FormControl>
                             <Input
-                              placeholder="https://twitch.tv/yourusername"
+                              placeholder="http://discord.gg/yourinvite"
                               {...field}
                             />
                           </FormControl>
@@ -128,7 +160,7 @@ const EditSocial = ({ social }: { social: Social }) => {
                 onClick={handleSubmit}
                 disabled={isSubmitting}
               >
-                Edit Social
+                Edit Project
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -141,4 +173,4 @@ const EditSocial = ({ social }: { social: Social }) => {
   );
 };
 
-export default EditSocial;
+export default EditProject;

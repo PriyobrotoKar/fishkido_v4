@@ -2,6 +2,7 @@
 
 import { prisma } from '@/lib/prisma';
 import { CreateSocialDto, CreateSocialSchema } from '../schemas/social';
+import { revalidatePath } from 'next/cache';
 
 export const createSocial = async (dto: CreateSocialDto) => {
   try {
@@ -13,6 +14,8 @@ export const createSocial = async (dto: CreateSocialDto) => {
         link: parsedData.link,
       },
     });
+
+    revalidatePath('/');
 
     return {
       data: social,

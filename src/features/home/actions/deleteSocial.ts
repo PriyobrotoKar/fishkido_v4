@@ -1,6 +1,7 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
+import { revalidatePath } from 'next/cache';
 
 export const deleteSocial = async (socialId: string) => {
   try {
@@ -9,6 +10,8 @@ export const deleteSocial = async (socialId: string) => {
         id: socialId,
       },
     });
+
+    revalidatePath('/');
 
     return {
       data: social,

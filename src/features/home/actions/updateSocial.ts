@@ -2,6 +2,7 @@
 
 import { prisma } from '@/lib/prisma';
 import { UpdateSocialDto, UpdateSocialSchema } from '../schemas/social';
+import { revalidatePath } from 'next/cache';
 
 export const updateSocial = async (dto: UpdateSocialDto, socialId: string) => {
   try {
@@ -16,6 +17,8 @@ export const updateSocial = async (dto: UpdateSocialDto, socialId: string) => {
         link: parsedData.link,
       },
     });
+
+    revalidatePath('/');
 
     return {
       data: social,
