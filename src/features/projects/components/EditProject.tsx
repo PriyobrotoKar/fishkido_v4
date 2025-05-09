@@ -29,6 +29,7 @@ import { UpdateProjectSchema } from '@/features/home/schemas/project';
 import { Project } from '../../../../prisma/generated/client';
 import { updateProject } from '../actions/updateProject';
 import { deleteProject } from '../actions/deleteProject';
+import Image from 'next/image';
 
 const EditProject = ({ project }: { project: Project }) => {
   const router = useRouter();
@@ -71,7 +72,16 @@ const EditProject = ({ project }: { project: Project }) => {
   };
 
   return (
-    <div className="bg-foreground/5 flex gap-4 rounded-lg p-4">
+    <div className="bg-foreground/5 flex items-center gap-4 rounded-lg p-2 pr-4">
+      <div>
+        <Image
+          src={`https://cdn.discordapp.com/icons/${project.guildId}/${project.icon}.png?size=128`}
+          alt={`${project.name} icon`}
+          width={40}
+          height={40}
+          className="rounded-md"
+        />
+      </div>
       <div className="basis-1/6">{project.name}</div>
       <div className="basis-1/6">{project.position}</div>
       <div className="flex-1">{project.invite}</div>

@@ -2,16 +2,7 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-
-export interface Project {
-  id: number;
-  name: string;
-  status: 'Current' | 'Previous';
-  imageUrl: string;
-  link: string;
-  memberCount: number;
-  position: string;
-}
+import { Project } from '../../../../prisma/generated/client';
 
 interface ProjectCardProps {
   project: Project;
@@ -23,7 +14,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
       <div className="flex items-center gap-4">
         <div>
           <Image
-            src={project.imageUrl}
+            src={`https://cdn.discordapp.com/icons/${project.guildId}/${project.icon}.png`}
             alt={project.name}
             width={46}
             height={46}
@@ -45,7 +36,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           <div>Position</div>
           <div className="text-foreground/60">{project.position}</div>
         </div>
-        <Link href={project.link}>
+        <Link href={project.invite}>
           <Button variant={'outline'}>Join</Button>
         </Link>
       </div>

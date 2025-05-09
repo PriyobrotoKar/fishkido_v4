@@ -1,4 +1,4 @@
-import { AdminHeader } from '@/components/AdminHeader';
+import { AdminTitle } from '@/components/AdminTitle';
 import { Button } from '@/components/ui/button';
 import { getSocials } from '@/features/home/actions/getSocials';
 import AddSocial from '@/features/home/components/AddSocial';
@@ -11,7 +11,7 @@ export default async function AdminHomePage() {
   if (socials.error) {
     return (
       <div className="space-y-10 text-center">
-        <AdminHeader subtitle="Home / Socials" />
+        <AdminTitle subtitle="Home / Socials" />
         <div>
           <h1 className="text-2xl font-bold">Error fetching socials</h1>
         </div>
@@ -21,7 +21,7 @@ export default async function AdminHomePage() {
 
   return (
     <div className="space-y-10">
-      <AdminHeader subtitle="Home / Socials" />
+      <AdminTitle subtitle="Home / Socials" />
       <div className="flex gap-4 px-4">
         <div className="basis-1/6">Social</div>
         <div className="flex-1">Link</div>
