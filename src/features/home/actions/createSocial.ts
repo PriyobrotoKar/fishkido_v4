@@ -8,8 +8,13 @@ export const createSocial = async (dto: CreateSocialDto) => {
   try {
     const parsedData = CreateSocialSchema.parse(dto);
 
+    if (typeof parsedData.icon !== 'string') {
+      throw new Error('Icon must be a string');
+    }
+
     const social = await prisma.social.create({
       data: {
+        icon: parsedData.icon,
         name: parsedData.social,
         link: parsedData.link,
       },

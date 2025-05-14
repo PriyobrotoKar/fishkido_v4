@@ -1,5 +1,6 @@
 'use server';
 
+import { deleteMedia } from '@/lib/cloudinary';
 import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 
@@ -10,6 +11,8 @@ export const deleteSocial = async (socialId: string) => {
         id: socialId,
       },
     });
+
+    await deleteMedia(social.icon);
 
     revalidatePath('/');
 

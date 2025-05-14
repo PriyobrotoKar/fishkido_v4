@@ -8,11 +8,16 @@ export const updateSocial = async (dto: UpdateSocialDto, socialId: string) => {
   try {
     const parsedData = UpdateSocialSchema.parse(dto);
 
+    if (typeof parsedData.icon !== 'string') {
+      throw new Error('Icon must be a string');
+    }
+
     const social = await prisma.social.update({
       where: {
         id: socialId,
       },
       data: {
+        icon: parsedData.icon,
         name: parsedData.social,
         link: parsedData.link,
       },
