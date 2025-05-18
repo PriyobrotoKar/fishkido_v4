@@ -16,6 +16,7 @@ export const fetchGuild = async (
   );
 
   if (!res.ok) {
+    console.log('Error fetching guild:', await res.json());
     throw new Error('Failed to fetch guild');
   }
 
@@ -24,4 +25,16 @@ export const fetchGuild = async (
     guild: data.guild,
     approximate_member_count: data.approximate_member_count,
   };
+};
+
+export const getUserDetailsByID = async (id: string) => {
+  const res = await fetch(`https://discordlookup.mesalytic.moe/v1/user/${id}`);
+
+  if (!res.ok) {
+    console.log('Error fetching user details:', await res.json());
+    throw new Error('Failed to fetch user details');
+  }
+
+  const data = await res.json();
+  return data;
 };

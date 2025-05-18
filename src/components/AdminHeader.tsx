@@ -27,7 +27,7 @@ const navLinks: NavLink[] = [
   },
   {
     name: 'Blacklist',
-    href: '/admin/blacklist',
+    href: '/admin/blacklists',
   },
   {
     name: 'Tickets',
