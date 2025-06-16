@@ -28,7 +28,7 @@ export default async function BlacklistPage() {
         <div className="basis-20">Status</div>
       </div>
 
-      <div>
+      <div className="space-y-2">
         {blacklists.data?.map((blacklist, i) => {
           return (
             <BlacklistCard key={blacklist.id} blacklist={blacklist} index={i} />

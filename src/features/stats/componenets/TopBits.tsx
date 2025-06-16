@@ -20,7 +20,7 @@ const topBits: Bit[] = [
 
 const TopBits = () => {
   return (
-    <div className="bg-foreground/5 max-w-xl space-y-7 rounded-lg px-10 py-7">
+    <div className="bg-foreground/5 max-w-lg space-y-7 rounded-lg px-10 py-7">
       <h1 className="font-clash text-2xl font-semibold">Top Bits Cheered</h1>
       <div>
         {topBits.map((bit, index) => (

@@ -3,7 +3,7 @@ import React from 'react';
 
 const BgGradient = () => {
   return (
-    <div className="absolute inset-0 -z-10 h-full w-full overflow-hidden">
+    <div className="fixed inset-0 -z-10 h-full w-full overflow-hidden">
       <Image
         src={'/bg-gradient-bottom.svg'}
         alt="Background Gradient"
