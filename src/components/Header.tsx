@@ -5,7 +5,8 @@ import Link from 'next/link';
 import React from 'react';
 import { Button } from './ui/button';
 import { motion } from 'motion/react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { Session } from 'next-auth';
 
 interface NavLink {
   name: string;
@@ -31,8 +32,13 @@ const navLinks: NavLink[] = [
   },
 ];
 
-const Header = () => {
+interface HeaderProps {
+  session: Session | null;
+}
+
+const Header = ({ session }: HeaderProps) => {
   const path = usePathname();
+  const router = useRouter();
 
   return (
     <header className="flex items-center justify-between border-b px-12 py-4">
@@ -60,7 +66,15 @@ const Header = () => {
         </ul>
       </nav>
 
-      <Button variant={'outline'}>Login</Button>
+      <Button
+        disabled={Boolean(session) && !session?.user.isAdmin}
+        variant={'outline'}
+        onClick={() => {
+          router.push('/admin');
+        }}
+      >
+        {session?.user.isAdmin ? 'Admin' : 'Login'}
+      </Button>
     </header>
   );
 };

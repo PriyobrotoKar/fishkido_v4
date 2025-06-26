@@ -9,19 +9,20 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import { signIn, useSession } from 'next-auth/react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-
-const schema = z.object({
-  email: z.string().email(),
-  punishmentId: z.string().min(1, { message: 'Punishment ID is required' }),
-  appeal: z.string().min(1, { message: 'Appeal is required' }),
-});
+import { discordSchema } from '../schemas/discord';
+import { createDiscordContact } from '../actions/createDiscordContact';
+import { toast } from 'sonner';
 
 const DiscordForm = () => {
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { data: session } = useSession();
+
+  const form = useForm<z.infer<typeof discordSchema>>({
+    resolver: zodResolver(discordSchema),
     defaultValues: {
       email: '',
       punishmentId: '',
@@ -29,8 +30,20 @@ const DiscordForm = () => {
     },
   });
 
-  const handleSubmit = form.handleSubmit((data) => {
-    console.log(data);
+  const handleSubmit = form.handleSubmit(async (data) => {
+    setIsSubmitting(true);
+    const contact = await createDiscordContact(data);
+
+    if (contact.error) {
+      console.log(contact.error);
+      toast.error(contact.error);
+      setIsSubmitting(false);
+      return;
+    }
+
+    form.reset();
+    setIsSubmitting(false);
+    toast.success('Message sent successfully!');
   });
 
   return (
@@ -39,6 +52,7 @@ const DiscordForm = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <FormField
             name="email"
+            disabled={!session}
             render={({ field }) => {
               return (
                 <FormItem>
@@ -53,6 +67,7 @@ const DiscordForm = () => {
 
           <FormField
             name="punishmentId"
+            disabled={!session}
             render={({ field }) => {
               return (
                 <FormItem>
@@ -67,6 +82,7 @@ const DiscordForm = () => {
 
           <FormField
             name="appeal"
+            disabled={!session}
             render={({ field }) => {
               return (
                 <FormItem>
@@ -82,13 +98,26 @@ const DiscordForm = () => {
             }}
           />
 
-          <Button
-            variant={'secondary'}
-            className="w-full justify-start"
-            size={'lg'}
-          >
-            Send Message
-          </Button>
+          {session ? (
+            <Button
+              variant={'secondary'}
+              className="w-full justify-start"
+              size={'lg'}
+            >
+              Send Message
+            </Button>
+          ) : (
+            <Button
+              type="button"
+              variant={'secondary'}
+              className="w-full justify-start"
+              size={'lg'}
+              onClick={() => signIn('discord')}
+              disabled={isSubmitting}
+            >
+              Log in to send message
+            </Button>
+          )}
         </form>
       </Form>
     </div>

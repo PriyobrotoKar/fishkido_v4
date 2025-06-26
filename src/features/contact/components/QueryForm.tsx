@@ -9,27 +9,40 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import { signIn, useSession } from 'next-auth/react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-
-const schema = z.object({
-  email: z.string().email(),
-  question: z.string().min(1, { message: 'Question is required' }),
-  additionalComments: z.string().optional(),
-});
+import { querySchema } from '../schemas/query';
+import { createQueryContact } from '../actions/createQueryForm';
+import { toast } from 'sonner';
 
 const QueryForm = () => {
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { data: session } = useSession();
+
+  const form = useForm<z.infer<typeof querySchema>>({
+    resolver: zodResolver(querySchema),
     defaultValues: {
       email: '',
       question: '',
     },
   });
 
-  const handleSubmit = form.handleSubmit((data) => {
-    console.log(data);
+  const handleSubmit = form.handleSubmit(async (data) => {
+    setIsSubmitting(true);
+    const contact = await createQueryContact(data);
+
+    if (contact.error) {
+      console.log(contact.error);
+      toast.error(contact.error);
+      setIsSubmitting(false);
+      return;
+    }
+
+    form.reset();
+    setIsSubmitting(false);
+    toast.success('Message sent successfully!');
   });
 
   return (
@@ -37,6 +50,7 @@ const QueryForm = () => {
       <Form {...form}>
         <form onSubmit={handleSubmit} className="space-y-6">
           <FormField
+            disabled={!session}
             name="email"
             render={({ field }) => {
               return (
@@ -52,6 +66,7 @@ const QueryForm = () => {
 
           <FormField
             name="question"
+            disabled={!session}
             render={({ field }) => {
               return (
                 <FormItem>
@@ -66,6 +81,7 @@ const QueryForm = () => {
 
           <FormField
             name="additionalComments"
+            disabled={!session}
             render={({ field }) => {
               return (
                 <FormItem>
@@ -81,13 +97,26 @@ const QueryForm = () => {
             }}
           />
 
-          <Button
-            variant={'secondary'}
-            className="w-full justify-start"
-            size={'lg'}
-          >
-            Send Message
-          </Button>
+          {session ? (
+            <Button
+              variant={'secondary'}
+              className="w-full justify-start"
+              size={'lg'}
+            >
+              Send Message
+            </Button>
+          ) : (
+            <Button
+              type="button"
+              variant={'secondary'}
+              className="w-full justify-start"
+              size={'lg'}
+              onClick={() => signIn('discord')}
+              disabled={isSubmitting}
+            >
+              Log in to send message
+            </Button>
+          )}
         </form>
       </Form>
     </div>

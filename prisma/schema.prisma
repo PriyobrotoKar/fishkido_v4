@@ -14,6 +14,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ContactType {
+  TWITCH
+  DISCORD
+  QUERY
+  OTHER
+}
+
 model Social {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
@@ -48,6 +55,19 @@ model Subs {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   username  String
   gifts     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Contact {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String
+  message   String?
+  meta      Json?
+  isRead    Boolean  @default(false)
+  isReplied Boolean  @default(false)
+  createdBy String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

@@ -9,29 +9,42 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import { signIn, useSession } from 'next-auth/react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-
-const schema = z.object({
-  email: z.string().email(),
-  twitchName: z.string().optional(),
-  subject: z.string().min(1, { message: 'Subject is required' }),
-  description: z.string().min(1, { message: 'Description is required' }),
-});
+import { otherSchema } from '../schemas/other';
+import { toast } from 'sonner';
+import { createOtherContact } from '../actions/createOtherContact';
 
 const OtherForm = () => {
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { data: session } = useSession();
+
+  const form = useForm<z.infer<typeof otherSchema>>({
+    resolver: zodResolver(otherSchema),
     defaultValues: {
       email: '',
+      twitchName: '',
       subject: '',
       description: '',
     },
   });
 
-  const handleSubmit = form.handleSubmit((data) => {
-    console.log(data);
+  const handleSubmit = form.handleSubmit(async (data) => {
+    setIsSubmitting(true);
+    const contact = await createOtherContact(data);
+
+    if (contact.error) {
+      console.log(contact.error);
+      toast.error(contact.error);
+      setIsSubmitting(false);
+      return;
+    }
+
+    form.reset();
+    setIsSubmitting(false);
+    toast.success('Message sent successfully!');
   });
 
   return (
@@ -40,6 +53,7 @@ const OtherForm = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <FormField
             name="email"
+            disabled={!session}
             render={({ field }) => {
               return (
                 <FormItem>
@@ -54,6 +68,7 @@ const OtherForm = () => {
 
           <FormField
             name="twitchName"
+            disabled={!session}
             render={({ field }) => {
               return (
                 <FormItem>
@@ -68,6 +83,7 @@ const OtherForm = () => {
 
           <FormField
             name="subject"
+            disabled={!session}
             render={({ field }) => {
               return (
                 <FormItem>
@@ -82,6 +98,7 @@ const OtherForm = () => {
 
           <FormField
             name="description"
+            disabled={!session}
             render={({ field }) => {
               return (
                 <FormItem>
@@ -97,13 +114,26 @@ const OtherForm = () => {
             }}
           />
 
-          <Button
-            variant={'secondary'}
-            className="w-full justify-start"
-            size={'lg'}
-          >
-            Send Message
-          </Button>
+          {session ? (
+            <Button
+              variant={'secondary'}
+              className="w-full justify-start"
+              size={'lg'}
+            >
+              Send Message
+            </Button>
+          ) : (
+            <Button
+              type="button"
+              variant={'secondary'}
+              className="w-full justify-start"
+              size={'lg'}
+              onClick={() => signIn('discord')}
+              disabled={isSubmitting}
+            >
+              Log in to send message
+            </Button>
+          )}
         </form>
       </Form>
     </div>
