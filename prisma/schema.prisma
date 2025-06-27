@@ -65,6 +65,7 @@ model Contact {
   email     String
   message   String?
   meta      Json?
+  reply     String?
   isRead    Boolean  @default(false)
   isReplied Boolean  @default(false)
   createdBy String
