@@ -22,13 +22,13 @@ export default async function BlacklistPage() {
     <div className="space-y-10">
       <AdminTitle subtitle="Blacklisting" />
 
-      <div className="flex items-center justify-between px-4 pl-16">
+      <div className="flex items-center justify-between px-4 pl-16 text-sm">
         <div className="">Account</div>
         <AddBlacklist />
         <div className="basis-20">Status</div>
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-2 text-sm">
         {blacklists.data?.map((blacklist, i) => {
           return (
             <BlacklistCard key={blacklist.id} blacklist={blacklist} index={i} />

@@ -22,15 +22,15 @@ export default async function AdminHomePage() {
   return (
     <div className="space-y-10">
       <AdminTitle subtitle="Home / Socials" />
-      <div className="flex gap-4 px-4">
-        <div className="basis-1/6">Social</div>
+      <div className="flex items-center gap-4 px-4 text-sm">
+        <div className="basis-[23%]">Social</div>
         <div className="flex-1">Link</div>
         <div className="flex gap-4">
           <Button variant={'secondary'}>About Me</Button>
           <AddSocial />
         </div>
       </div>
-      <div className="space-y-4">
+      <div className="space-y-4 text-sm">
         {socials.data?.map((social) => {
           return <EditSocial social={social} key={social.id} />;
         })}

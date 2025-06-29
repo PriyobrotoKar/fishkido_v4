@@ -28,9 +28,9 @@ export async function createDiscordContact(
       },
     });
 
-    // if (existingContact) {
-    //   throw new Error('You have already submitted your message.');
-    // }
+    if (existingContact) {
+      throw new Error('You have already submitted your message.');
+    }
 
     // create the Discord contact
     const contact = await prisma.contact.create({

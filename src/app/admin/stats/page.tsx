@@ -1,7 +1,6 @@
 import { AdminTitle } from '@/components/AdminTitle';
 import { getAllSubs } from '@/features/subs/actions/getAllSubs';
 import EditSubForm from '@/features/subs/components/EditSubForm';
-import SubEditCard from '@/features/subs/components/SubEditCard';
 import React from 'react';
 
 export default async function StatsPage() {
@@ -22,13 +21,13 @@ export default async function StatsPage() {
     <div>
       <div className="space-y-10">
         <AdminTitle subtitle="Statistics" />
-        <div className="flex gap-4 px-6">
-          <div className="basis-8">#</div>
-          <div className="basis-1/6">Name</div>
-          <div className="basis-1/6">Subs Gifted</div>
+        <div className="flex gap-4 px-6 text-sm">
+          <div className="basis-5">#</div>
+          <div className="basis-[18%]">Name</div>
+          <div className="flex-1">Subs Gifted</div>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-4 text-sm">
           {subs.data?.map((sub, index) => {
             return <EditSubForm sub={sub} index={index} key={sub.id} />;
           })}

@@ -6,6 +6,7 @@ import React from 'react';
 import { Button } from './ui/button';
 import { motion } from 'motion/react';
 import { usePathname } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 
 interface NavLink {
   name: string;
@@ -64,7 +65,16 @@ const AdminHeader = () => {
         </ul>
       </nav>
 
-      <Button variant={'outline'}>Login</Button>
+      <Button
+        variant={'destructive'}
+        onClick={() =>
+          signOut({
+            redirectTo: '/',
+          })
+        }
+      >
+        Logout
+      </Button>
     </header>
   );
 };

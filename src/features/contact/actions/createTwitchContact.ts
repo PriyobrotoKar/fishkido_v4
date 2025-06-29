@@ -25,9 +25,9 @@ export async function createTwitchContact(data: z.infer<typeof twitchSchema>) {
       },
     });
 
-    // if (existingContact) {
-    //   throw new Error('You have already submitted your message.');
-    // }
+    if (existingContact) {
+      throw new Error('You have already submitted your message.');
+    }
 
     // create the Twitch contact
     const contact = await prisma.contact.create({

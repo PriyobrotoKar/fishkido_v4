@@ -7,6 +7,7 @@ import { Button } from './ui/button';
 import { motion } from 'motion/react';
 import { usePathname, useRouter } from 'next/navigation';
 import { Session } from 'next-auth';
+import { signIn } from 'next-auth/react';
 
 interface NavLink {
   name: string;
@@ -70,6 +71,12 @@ const Header = ({ session }: HeaderProps) => {
         disabled={Boolean(session) && !session?.user.isAdmin}
         variant={'outline'}
         onClick={() => {
+          if (!session) {
+            signIn('discord', {
+              redirectTo: '/admin',
+            });
+            return;
+          }
           router.push('/admin');
         }}
       >

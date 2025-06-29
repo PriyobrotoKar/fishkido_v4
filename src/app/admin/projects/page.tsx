@@ -21,9 +21,9 @@ export default async function AdminProjectPage() {
   return (
     <div className="space-y-10">
       <AdminTitle subtitle="Edit Projects" />
-      <div className="flex gap-4 px-4 pl-16">
-        <div className="basis-1/6">Name</div>
-        <div className="basis-1/6">Position</div>
+      <div className="flex gap-4 px-4 pl-16 text-sm">
+        <div className="basis-[18%]">Name</div>
+        <div className="basis-[18%]">Position</div>
         <div className="flex-1">Invite</div>
         <div className="flex gap-4">
           <RefreshProjects />
@@ -31,7 +31,7 @@ export default async function AdminProjectPage() {
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 text-sm">
         {projects.data?.map((project) => {
           return <EditProject project={project} key={project.id} />;
         })}
