@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { twitchSchema } from '../schemas/twitch';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { revalidatePath } from 'next/cache';
 
 export async function createTwitchContact(data: z.infer<typeof twitchSchema>) {
   try {
@@ -38,6 +39,8 @@ export async function createTwitchContact(data: z.infer<typeof twitchSchema>) {
         createdBy: session.user.id,
       },
     });
+
+    revalidatePath('/admin/tickets');
 
     return {
       data: contact,

@@ -21,6 +21,7 @@ export const createSocial = async (dto: CreateSocialDto) => {
     });
 
     revalidatePath('/');
+    revalidatePath('/admin');
 
     return {
       data: social,

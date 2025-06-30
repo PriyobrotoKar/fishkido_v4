@@ -17,6 +17,7 @@ export const updateProject = async (id: string, data: UpdateProjectDto) => {
     });
 
     revalidatePath('/projects');
+    revalidatePath('/admin/projects');
 
     return {
       data: project,

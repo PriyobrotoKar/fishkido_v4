@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { otherSchema } from '../schemas/other';
+import { revalidatePath } from 'next/cache';
 
 export async function createOtherContact(data: z.infer<typeof otherSchema>) {
   try {
@@ -41,6 +42,8 @@ export async function createOtherContact(data: z.infer<typeof otherSchema>) {
         createdBy: session.user.id,
       },
     });
+
+    revalidatePath('/admin/tickets');
 
     return {
       data: contact,

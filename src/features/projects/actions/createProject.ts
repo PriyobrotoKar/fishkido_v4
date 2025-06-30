@@ -24,6 +24,7 @@ export const createProject = async (dto: CreateProjectDto) => {
     });
 
     revalidatePath('/projects');
+    revalidatePath('/admin/projects');
 
     return {
       data: project,

@@ -1,6 +1,7 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
+import { revalidatePath } from 'next/cache';
 
 export const removeFromBlacklist = async (id: string) => {
   try {
@@ -9,6 +10,8 @@ export const removeFromBlacklist = async (id: string) => {
         id,
       },
     });
+
+    revalidatePath('/admin/blacklists');
 
     return {
       data: blacklistedUser,

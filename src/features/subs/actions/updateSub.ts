@@ -14,6 +14,7 @@ export const updateSub = async (id: string, data: UpdateSubDto) => {
     });
 
     revalidatePath('/stats');
+    revalidatePath('/admin/stats');
 
     return {
       data: sub,

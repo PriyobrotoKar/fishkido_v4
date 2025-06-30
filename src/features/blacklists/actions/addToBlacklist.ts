@@ -2,6 +2,7 @@
 
 import { getUserDetailsByID } from '@/lib/discord';
 import { prisma } from '@/lib/prisma';
+import { revalidatePath } from 'next/cache';
 
 export const addToBlacklist = async (userId: string) => {
   try {
@@ -25,6 +26,8 @@ export const addToBlacklist = async (userId: string) => {
         name: username,
       },
     });
+
+    revalidatePath('/admin/blacklists');
 
     return {
       data: blacklistedUser,

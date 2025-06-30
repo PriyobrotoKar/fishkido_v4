@@ -1,6 +1,7 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
+import { revalidatePath } from 'next/cache';
 
 export async function markAsRead(contactId: string) {
   try {
@@ -17,6 +18,8 @@ export async function markAsRead(contactId: string) {
       where: { id: contactId },
       data: { isRead: true },
     });
+
+    revalidatePath('/admin/tickets');
 
     return {
       data: updatedContact,

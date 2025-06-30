@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { querySchema } from '../schemas/query';
+import { revalidatePath } from 'next/cache';
 
 export async function createQueryContact(data: z.infer<typeof querySchema>) {
   try {
@@ -41,6 +42,8 @@ export async function createQueryContact(data: z.infer<typeof querySchema>) {
         createdBy: session.user.id,
       },
     });
+
+    revalidatePath('/admin/tickets');
 
     return {
       data: contact,

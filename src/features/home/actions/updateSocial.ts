@@ -24,6 +24,7 @@ export const updateSocial = async (dto: UpdateSocialDto, socialId: string) => {
     });
 
     revalidatePath('/');
+    revalidatePath('/admin');
 
     return {
       data: social,

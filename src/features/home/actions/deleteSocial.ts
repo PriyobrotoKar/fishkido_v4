@@ -15,6 +15,7 @@ export const deleteSocial = async (socialId: string) => {
     await deleteMedia(social.icon);
 
     revalidatePath('/');
+    revalidatePath('/admin');
 
     return {
       data: social,

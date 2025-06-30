@@ -1,6 +1,7 @@
 'use server';
 import { prisma } from '@/lib/prisma';
 import sendEmail from '@/lib/resend';
+import { revalidatePath } from 'next/cache';
 
 export async function replyToContact(contactId: string, replyMessage: string) {
   try {
@@ -29,6 +30,8 @@ export async function replyToContact(contactId: string, replyMessage: string) {
       where: { id: contactId },
       data: { isReplied: true, reply: replyMessage },
     });
+
+    revalidatePath('/admin/tickets');
 
     return {
       data: updatedContact,

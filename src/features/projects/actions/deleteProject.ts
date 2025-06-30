@@ -10,6 +10,7 @@ export const deleteProject = async (id: string) => {
     });
 
     revalidatePath('/projects');
+    revalidatePath('/admin/projects');
 
     return {
       data: project,

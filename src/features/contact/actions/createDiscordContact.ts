@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { discordSchema } from '../schemas/discord';
+import { revalidatePath } from 'next/cache';
 
 export async function createDiscordContact(
   data: z.infer<typeof discordSchema>
@@ -11,7 +12,7 @@ export async function createDiscordContact(
   try {
     // check if the user is logged in
     const session = await auth();
-    console.log('Session:', session);
+
     if (!session || !session.user?.id) {
       throw new Error('You must be logged in to submit a message.');
     }
@@ -44,6 +45,8 @@ export async function createDiscordContact(
         createdBy: session.user.id,
       },
     });
+
+    revalidatePath('/admin/tickets');
 
     return {
       data: contact,
