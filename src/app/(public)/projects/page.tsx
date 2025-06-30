@@ -2,6 +2,8 @@ import { getProjects } from '@/features/projects/actions/getProjects';
 import { refreshProjects } from '@/features/projects/actions/refreshProjects';
 import ProjectCard from '@/features/projects/components/ProjectCard';
 
+export const revalidate = 3600; // Revalidate every hour
+
 export default async function ProjectPage() {
   const projects = await getProjects();
   const data = await refreshProjects();
