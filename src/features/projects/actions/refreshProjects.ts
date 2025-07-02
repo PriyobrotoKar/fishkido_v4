@@ -2,7 +2,6 @@
 
 import { fetchGuild } from '@/lib/discord';
 import { prisma } from '@/lib/prisma';
-import { revalidatePath } from 'next/cache';
 
 export const refreshProjects = async () => {
   try {
@@ -39,8 +38,6 @@ export const refreshProjects = async () => {
     );
 
     console.log('Projects refreshed successfully at ', new Date());
-    revalidatePath('/projects');
-    revalidatePath('/admin/projects');
 
     return {
       message: 'Projects refreshed successfully',

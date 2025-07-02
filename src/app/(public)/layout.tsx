@@ -11,7 +11,7 @@ export default async function PublicLayout({
     <div className="relative min-h-svh">
       <Header />
       <BgGradient />
-      <div className="py-28">
+      <div className="py-12 md:py-28">
         <Suspense>{children}</Suspense>
       </div>
     </div>

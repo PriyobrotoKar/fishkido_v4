@@ -18,10 +18,9 @@ import { toast } from 'sonner';
 
 interface ContactReplyProps {
   contact: Contact;
-  setOpen: (open: boolean) => void;
 }
 
-const ContactReply = ({ contact, setOpen }: ContactReplyProps) => {
+const ContactReply = ({ contact }: ContactReplyProps) => {
   const router = useRouter();
   const { meta, message } = contact;
   const [replyMessage, setReplyMessage] = useState(contact.reply ?? '');
@@ -61,7 +60,6 @@ const ContactReply = ({ contact, setOpen }: ContactReplyProps) => {
 
     setIsSubmitting(false);
     toast.success('Reply sent successfully!');
-    setOpen(false);
     router.refresh();
   };
 

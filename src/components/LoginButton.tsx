@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from './ui/button';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { IconLock } from '@tabler/icons-react';
 
 const LoginButton = () => {
   const { data: session } = useSession();
@@ -12,6 +13,7 @@ const LoginButton = () => {
     <Button
       disabled={Boolean(session) && !session?.user.isAdmin}
       variant={'outline'}
+      className="px-2 md:px-4"
       onClick={() => {
         if (!session) {
           signIn('discord', {
@@ -22,7 +24,12 @@ const LoginButton = () => {
         router.push('/admin');
       }}
     >
-      {session?.user.isAdmin ? 'Admin' : 'Login'}
+      <span className="hidden md:inline-block">
+        {session?.user.isAdmin ? 'Admin' : 'Login'}
+      </span>
+      <span className="md:hidden">
+        <IconLock />
+      </span>
     </Button>
   );
 };

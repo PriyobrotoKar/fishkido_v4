@@ -29,8 +29,8 @@ const navLinks: NavLink[] = [
 
 const Header = async () => {
   return (
-    <header className="flex items-center justify-between border-b px-12 py-4">
-      <div className="w-20">
+    <header className="flex items-center justify-between border-b px-4 py-4 md:px-12">
+      <div className="md:w-20">
         <Image src="/logo.svg" alt="Logo" width={11} height={16} />
       </div>
 

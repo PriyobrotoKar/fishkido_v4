@@ -6,10 +6,10 @@ import React from 'react';
 
 export default function StatsPage() {
   return (
-    <div className="space-y-12">
+    <div className="space-y-12 px-6">
       <ChannelInfo />
       <Separator className="via-border mx-auto max-w-3xl bg-gradient-to-r from-transparent to-transparent" />
-      <div className="flex justify-center gap-32 [&>*]:flex-1">
+      <div className="flex flex-col justify-center gap-10 md:flex-row lg:gap-20 [&>*]:flex-1">
         <TopGifts />
         <TopBits />
       </div>

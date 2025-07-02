@@ -17,6 +17,8 @@ export async function createDiscordContact(
       throw new Error('You must be logged in to submit a message.');
     }
 
+    //TODO: Check if the user id is blacklisted or not
+
     const parsedData = discordSchema.parse(data);
 
     // check if the user has already submitted a contact form within the last 1 hour

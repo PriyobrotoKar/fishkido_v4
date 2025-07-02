@@ -1,4 +1,5 @@
 import { Resend } from 'resend';
+import { ContactEmail } from '@/emails/contact';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -10,7 +11,7 @@ export default async function sendEmail(payload: {
     from: 'Fishkido <onboarding@resend.dev>',
     to: payload.email,
     subject: `New message from Fishkido`,
-    text: payload.message,
+    react: <ContactEmail message={payload.message} />,
   });
 
   if (error) {

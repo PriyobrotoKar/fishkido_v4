@@ -4,8 +4,8 @@ import Activity from './Activity';
 
 const Profile = () => {
   return (
-    <section className="flex justify-center gap-5">
-      <div className="overflow-hidden rounded-full">
+    <section className="mx-auto flex w-fit flex-col items-center justify-center gap-5 md:flex-row">
+      <div className="w-fit overflow-hidden rounded-full">
         <Image
           src={'/images/profile.png'}
           alt="Profile Image"

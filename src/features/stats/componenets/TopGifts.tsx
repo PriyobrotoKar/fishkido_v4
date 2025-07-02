@@ -13,7 +13,7 @@ const TopGifts = async () => {
   }
 
   return (
-    <div className="bg-foreground/5 max-w-lg space-y-7 rounded-lg px-10 py-7">
+    <div className="bg-foreground/5 max-w-lg space-y-7 rounded-lg px-4 py-7 md:px-10">
       <h1 className="font-clash text-2xl font-semibold">Top Gifted Subs</h1>
       <div>
         {subs.data?.map((sub, index) => (

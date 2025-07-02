@@ -16,7 +16,7 @@ const NavLinks = ({ links }: NavLinksProps) => {
   const path = usePathname();
   return (
     <nav>
-      <ul className="flex gap-10">
+      <ul className="flex gap-4 md:gap-10">
         {links.map((link) => {
           const isActive = path === link.href;
 

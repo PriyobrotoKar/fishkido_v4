@@ -6,7 +6,7 @@ const ChannelInfo = () => {
   return (
     <div>
       <section className="flex justify-center gap-5">
-        <div className="overflow-hidden rounded-full">
+        <div className="hidden overflow-hidden rounded-full md:block">
           <Image
             src={'/images/twitch.png'}
             alt="Profile Image"

@@ -18,14 +18,12 @@ import { columns } from './Columns';
 import { Contact } from '../../../../prisma/generated/client';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import ContactReply from './ContactReply';
-import { useState } from 'react';
 
 interface DataTableProps {
   data: Contact[];
 }
 
 export function ContactTable({ data }: DataTableProps) {
-  const [open, setOpen] = useState(false);
   const table = useReactTable({
     data,
     columns: columns,
@@ -56,7 +54,7 @@ export function ContactTable({ data }: DataTableProps) {
         <TableBody>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
-              <Dialog open={open} onOpenChange={setOpen} key={row.id}>
+              <Dialog key={row.id}>
                 <DialogTrigger asChild>
                   <TableRow
                     data-state={row.getIsSelected() && 'selected'}
@@ -74,7 +72,7 @@ export function ContactTable({ data }: DataTableProps) {
                 </DialogTrigger>
 
                 <DialogContent className="gap-8">
-                  <ContactReply contact={row.original} setOpen={setOpen} />
+                  <ContactReply contact={row.original} />
                 </DialogContent>
               </Dialog>
             ))
