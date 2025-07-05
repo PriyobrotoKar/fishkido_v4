@@ -1,4 +1,5 @@
 import { AdminTitle } from '@/components/AdminTitle';
+import RefreshSubsBtn from '@/features/stats/componenets/RefreshSubsBtn';
 import { getAllSubs } from '@/features/subs/actions/getAllSubs';
 import EditSubForm from '@/features/subs/components/EditSubForm';
 import React from 'react';
@@ -25,6 +26,7 @@ export default async function StatsPage() {
           <div className="basis-5">#</div>
           <div className="basis-[18%]">Name</div>
           <div className="flex-1">Subs Gifted</div>
+          <RefreshSubsBtn />
         </div>
 
         <div className="space-y-4 text-sm">
