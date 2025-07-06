@@ -1,12 +1,14 @@
 import { AdminTitle } from '@/components/AdminTitle';
-import { Button } from '@/components/ui/button';
+import { getAbout } from '@/features/home/actions/getAbout';
 import { getSocials } from '@/features/home/actions/getSocials';
+import AboutDialog from '@/features/home/components/AboutDialog';
 import AddSocial from '@/features/home/components/AddSocial';
 import EditSocial from '@/features/home/components/EditSocial';
 import React from 'react';
 
 export default async function AdminHomePage() {
   const socials = await getSocials();
+  const about = await getAbout();
 
   if (socials.error) {
     return (
@@ -26,7 +28,7 @@ export default async function AdminHomePage() {
         <div className="basis-[23%]">Social</div>
         <div className="flex-1">Link</div>
         <div className="flex gap-4">
-          <Button variant={'secondary'}>About Me</Button>
+          <AboutDialog profile={about.data} />
           <AddSocial />
         </div>
       </div>

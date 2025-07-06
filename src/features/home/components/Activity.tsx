@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import StatusBadge, { Status, statusConfig } from './StatusBadge';
 import Image from 'next/image';
 
 const Activity = () => {
-  const [status, setStatus] = React.useState<Status>('offline');
+  const [status, setStatus] = useState<Status>('offline');
+  const [song, setSong] = useState<string | null>(null);
 
   useEffect(() => {
     const ws = new WebSocket('wss://api.lanyard.rest/socket');
@@ -40,7 +41,10 @@ const Activity = () => {
 
       if (data.op === 0) {
         const status = data.d.discord_status;
+        const song = data.d.spotify?.song;
+        console.log('Status updated:', data);
         setStatus(status);
+        setSong(song);
       }
     };
   }, []);
@@ -61,7 +65,13 @@ const Activity = () => {
             className="inline-block"
           />
         </span>
-        <span>Not listening to Spotify</span>
+        {song ? (
+          <span>
+            Listening to <strong>{song}</strong> on Spotify
+          </span>
+        ) : (
+          <span>Not listening to Spotify</span>
+        )}
       </div>
     </div>
   );

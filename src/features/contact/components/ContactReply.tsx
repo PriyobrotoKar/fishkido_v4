@@ -29,10 +29,12 @@ const ContactReply = ({ contact }: ContactReplyProps) => {
   const fields = Object.entries({
     ...(meta as JsonObject),
     message,
-  }).map(([key, value]) => ({
-    key,
-    value,
-  }));
+  }).map(([key, value]) => {
+    return {
+      key,
+      value,
+    };
+  });
 
   useEffect(() => {
     if (contact.isRead) return;
@@ -70,14 +72,17 @@ const ContactReply = ({ contact }: ContactReplyProps) => {
       </DialogHeader>
       <div className="space-y-4">
         <div className="space-y-4">
-          {fields.map(({ key, value }) => (
-            <div key={key} className="flex flex-col gap-2">
-              <Label>{key.charAt(0).toUpperCase() + key.slice(1)}</Label>
-              <p className="bg-foreground/10 rounded-lg px-3 py-2 text-sm">
-                {value}
-              </p>
-            </div>
-          ))}
+          {fields.map(({ key, value }) => {
+            if (!value) return null; // Skip empty values
+            return (
+              <div key={key} className="flex flex-col gap-2">
+                <Label>{key.charAt(0).toUpperCase() + key.slice(1)}</Label>
+                <p className="bg-foreground/10 rounded-lg px-3 py-2 text-sm">
+                  {value}
+                </p>
+              </div>
+            );
+          })}
         </div>
         <div className="space-y-2">
           <Label>Reply Message</Label>

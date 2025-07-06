@@ -17,7 +17,16 @@ export async function createDiscordContact(
       throw new Error('You must be logged in to submit a message.');
     }
 
-    //TODO: Check if the user id is blacklisted or not
+    // Check if the user id is blacklisted or not
+    const blacklistedUser = await prisma.blacklists.findUnique({
+      where: {
+        userId: session.user.id,
+      },
+    });
+
+    if (blacklistedUser) {
+      throw new Error('You are blacklisted from submitting messages.');
+    }
 
     const parsedData = discordSchema.parse(data);
 

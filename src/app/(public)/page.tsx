@@ -3,6 +3,8 @@ import About from '@/features/home/components/About';
 import Profile from '@/features/home/components/Profile';
 import Socials from '@/features/home/components/Socials';
 
+export const revalidate = 3600; // Revalidate every hour
+
 export default function Home() {
   return (
     <div className="mx-auto max-w-3xl space-y-6 md:space-y-12">

@@ -6,7 +6,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
     <div>
       <AdminHeader />
-      <BgGradient />
+      <BgGradient type="green" />
       <div className="mx-auto max-w-3xl py-28">{children}</div>
     </div>
   );

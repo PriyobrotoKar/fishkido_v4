@@ -4,6 +4,7 @@ import { Button } from './ui/button';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { IconLock } from '@tabler/icons-react';
+import { cn } from '@/lib/utils';
 
 const LoginButton = () => {
   const { data: session } = useSession();
@@ -13,7 +14,7 @@ const LoginButton = () => {
     <Button
       disabled={Boolean(session) && !session?.user.isAdmin}
       variant={'outline'}
-      className="px-2 md:px-4"
+      className={cn('px-2 md:px-4', session && 'border-accent text-accent')}
       onClick={() => {
         if (!session) {
           signIn('discord', {
