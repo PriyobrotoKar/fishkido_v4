@@ -57,7 +57,7 @@ const QueryForm = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="ezblivingstone@gmail.com" {...field} />
+                    <Input placeholder="fishkido@gmail.com" {...field} />
                   </FormControl>
                 </FormItem>
               );

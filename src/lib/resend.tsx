@@ -8,7 +8,7 @@ export default async function sendEmail(payload: {
   message: string;
 }) {
   const { data, error } = await resend.emails.send({
-    from: 'Fishkido <onboarding@resend.dev>',
+    from: 'Fishkido <mail@fishkido.tv>',
     to: payload.email,
     subject: `New message from Fishkido`,
     react: <ContactEmail message={payload.message} />,
