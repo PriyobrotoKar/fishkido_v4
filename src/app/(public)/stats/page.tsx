@@ -11,6 +11,7 @@ export default async function StatsPage() {
   return (
     <div className="space-y-12 px-6">
       <ChannelInfo
+        profile={data?.profile}
         followers={data?.followers}
         subscribers={data?.subscribers}
       />

@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 import React from 'react';
 
-export type Status = 'online' | 'offline' | 'away' | 'dnd' | 'idle';
+export type Status = 'online' | 'offline' | 'dnd' | 'idle';
 
 type StatusConfig = {
   color: string;
@@ -11,9 +11,8 @@ type StatusConfig = {
 export const statusConfig: Record<Status, StatusConfig> = {
   online: { color: 'bg-green-700', description: 'online' },
   offline: { color: 'bg-gray-500', description: 'offline' },
-  away: { color: 'bg-yellow-500', description: 'away' },
   dnd: { color: 'bg-red-500', description: 'do not disturb' },
-  idle: { color: 'bg-blue-500', description: 'idle' },
+  idle: { color: 'bg-yellow-600', description: 'idle' },
 };
 
 interface StatusBadgeProps {

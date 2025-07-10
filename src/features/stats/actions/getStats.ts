@@ -2,6 +2,7 @@ const baseUrl = 'https://api.twitch.tv/helix';
 const broadcasterId = process.env.BROADCASTER_ID;
 
 const urls = [
+  '/users?login=fishkido',
   `/bits/leaderboard`,
   `/channels/followers?broadcaster_id=${broadcasterId}`,
   `/subscriptions?broadcaster_id=${broadcasterId}`,
@@ -26,11 +27,12 @@ export async function getStats() {
       throw new Error('One or more responses were not OK');
     }
 
-    const [bits, followers, subscriptions] = await Promise.all(
+    const [profile, bits, followers, subscriptions] = await Promise.all(
       responses.map((res) => res.json())
     );
 
     return {
+      profile: profile.data[0],
       bits,
       followers: followers.total,
       subscribers: subscriptions.total,

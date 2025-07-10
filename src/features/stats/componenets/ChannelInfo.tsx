@@ -3,11 +3,14 @@ import Image from 'next/image';
 import React from 'react';
 
 interface ChannelInfoProps {
+  profile: {
+    profile_image_url: string;
+  };
   followers?: number;
   subscribers?: number;
 }
 
-const ChannelInfo = ({ followers, subscribers }: ChannelInfoProps) => {
+const ChannelInfo = ({ profile, followers, subscribers }: ChannelInfoProps) => {
   if (!followers || !subscribers) {
     return (
       <div className="space-y-4 rounded-lg px-4 py-7 text-center md:px-10">
@@ -22,7 +25,7 @@ const ChannelInfo = ({ followers, subscribers }: ChannelInfoProps) => {
       <section className="flex justify-center gap-5">
         <div className="hidden overflow-hidden rounded-full md:block">
           <Image
-            src={'/images/twitch.png'}
+            src={profile.profile_image_url || '/images/twitch.png'}
             alt="Profile Image"
             width={148}
             height={148}

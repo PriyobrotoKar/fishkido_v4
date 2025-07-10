@@ -42,7 +42,6 @@ const Activity = () => {
       if (data.op === 0) {
         const status = data.d.discord_status;
         const song = data.d.spotify?.song;
-        console.log('Status updated:', data);
         setStatus(status);
         setSong(song);
       }
@@ -58,7 +57,7 @@ const Activity = () => {
       <div className="space-x-5">
         <span>
           <Image
-            src={'/music.svg'}
+            src={song ? '/music-green.svg' : '/music.svg'}
             alt="Music Waveform"
             width={25}
             height={10}
