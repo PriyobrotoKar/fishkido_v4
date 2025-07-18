@@ -34,10 +34,11 @@ export async function createOtherContact(data: z.infer<typeof otherSchema>) {
     const contact = await prisma.contact.create({
       data: {
         email: parsedData.email,
-        name: parsedData.twitchName || session.user.name || 'Anonymous',
+        name: session.user.name || 'Anonymous',
         message: parsedData.description,
         meta: {
           subject: parsedData.subject,
+          category: 'Other',
         },
         createdBy: session.user.id,
       },

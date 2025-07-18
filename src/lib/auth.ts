@@ -25,8 +25,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       const isAdmin = process.env
         .ADMIN_IDS!.split(',')
         .includes(token.id as string);
+
       session.user.id = token.id as string;
       session.user.isAdmin = isAdmin;
+
       return session;
     },
   },

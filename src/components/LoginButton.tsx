@@ -14,7 +14,11 @@ const LoginButton = () => {
     <Button
       disabled={Boolean(session) && !session?.user.isAdmin}
       variant={'outline'}
-      className={cn('px-2 md:px-4', session && 'border-accent text-accent')}
+      className={cn(
+        'px-2 md:px-4',
+        session && 'border-accent text-accent',
+        session?.user.isAdmin && 'hover:bg-green-500/20'
+      )}
       onClick={() => {
         if (!session) {
           signIn('discord', {

@@ -34,9 +34,12 @@ export async function createTwitchContact(data: z.infer<typeof twitchSchema>) {
     const contact = await prisma.contact.create({
       data: {
         email: parsedData.email,
-        name: parsedData.twitchName,
+        name: session.user.name || 'Anonymous',
         message: parsedData.appeal,
         createdBy: session.user.id,
+        meta: {
+          category: 'Twitch',
+        },
       },
     });
 

@@ -52,6 +52,7 @@ export async function createDiscordContact(
         message: parsedData.appeal,
         meta: {
           punishmentId: parsedData.punishmentId,
+          category: 'Discord',
         },
         createdBy: session.user.id,
       },

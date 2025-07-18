@@ -38,6 +38,7 @@ export async function createQueryContact(data: z.infer<typeof querySchema>) {
         message: parsedData.additionalComments,
         meta: {
           question: parsedData.question,
+          category: 'Query',
         },
         createdBy: session.user.id,
       },

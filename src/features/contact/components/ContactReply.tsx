@@ -22,13 +22,14 @@ interface ContactReplyProps {
 
 const ContactReply = ({ contact }: ContactReplyProps) => {
   const router = useRouter();
-  const { meta, message } = contact;
+  const { meta, message, createdBy } = contact;
   const [replyMessage, setReplyMessage] = useState(contact.reply ?? '');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const fields = Object.entries({
     ...(meta as JsonObject),
     message,
+    ['Discord ID']: createdBy,
   }).map(([key, value]) => {
     return {
       key,
