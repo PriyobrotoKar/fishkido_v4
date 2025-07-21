@@ -17,7 +17,7 @@ export default async function ProjectPage() {
   }
 
   return (
-    <div className="mx-auto grid max-w-5xl gap-12 px-6 md:grid-cols-2 lg:grid-cols-3">
+    <div className="mx-auto grid max-w-5xl auto-rows-fr gap-12 px-6 md:grid-cols-2 lg:grid-cols-3">
       {projects.data?.map((project) => (
         <ProjectCard project={project} key={project.id} />
       ))}

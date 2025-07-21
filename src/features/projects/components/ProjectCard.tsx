@@ -10,7 +10,7 @@ interface ProjectCardProps {
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
-    <article className="bg-foreground/5 space-y-9 rounded-lg p-4 text-sm">
+    <article className="bg-foreground/5 flex flex-col justify-between gap-9 rounded-lg p-4 text-sm">
       <div className="flex items-center gap-4">
         <div>
           <Image
